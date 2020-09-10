@@ -3,7 +3,6 @@ Created on Sep. 9, 2020
 
 @author: Ben
 '''
-import Config
 import SocketServer
 
 class MyTCPHandler(SocketServer.BaseRequestHandler):
