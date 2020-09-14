@@ -5,6 +5,7 @@ Created on Sep. 14, 2020
 '''
 
 import socketserver as SocketServer
+import ESP8266Server.Server.Data as Data
 
 
 class Handler(SocketServer.BaseRequestHandler):
@@ -38,3 +39,6 @@ class Handler(SocketServer.BaseRequestHandler):
         print (self.data)
         # just send back the same data to the client, but upper-cased
         self.request.sendall(self.data.upper())
+        # now, as a test; invoke our data service, all it will do
+        # is list DBs when constructed
+        MyData = Data.DataSource()
