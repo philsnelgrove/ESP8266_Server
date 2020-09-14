@@ -24,12 +24,19 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         print ("connection detected")
         # self.request is the TCP socket connected to the client
+        # this line will "grab" the first 1024 bytes of data
+        # off the request object and then remove all the trailing spaces
         self.data = self.request.recv(1024).strip()
         # these print to STDOUT information about the communication
         print ("{} wrote:".format(self.client_address[0]))
         print (self.data)
-        # just send back the same data, but upper-cased
+        # just send back the same data to the client, but upper-cased
         self.request.sendall(self.data.upper())
+
+# python will look for a function named "main" as it's starting point.
+# the below is a cheat, that doesn't define a function named "main"...
+# instead it runs that code if the interpreter is busy looking for a function
+# named "main"
 if __name__ == "__main__":
     # HOST, PORT = "10.0.0.29", 9999
     HOST, PORT = "192.168.1.24", 9999
