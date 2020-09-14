@@ -18,9 +18,9 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
     # passed to it as a parameter will contain all 
     # the properties and methods of the calling class
     #
-    # it is the nature of the "BaseRequestHandler" to call
-    # a method named "handle" off itself.  We override that
-    # method here, and this one gets called instead.
+    # it is the nature of the "TCPServer" to call
+    # a method named "handle" off the object it's been given as a handler.
+    # We override that method here, and this one gets called instead.
     def handle(self):
         print ("connection detected")
         # self.request is the TCP socket connected to the client
