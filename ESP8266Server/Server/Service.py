@@ -8,7 +8,7 @@ Created on Sep. 10, 2020
 # the python libraries, and our own 
 # "Logic" module which must be pathed to
 import socketserver as SocketServer
-import ESP32Server.Server.Logic as Logic
+import ESP8266Server.Server.Logic as Logic
 
 # python will look for a function named "main" as it's starting point.
 # the below is a cheat, that doesn't define a function named "main"...
