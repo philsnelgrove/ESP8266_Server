@@ -8,14 +8,6 @@ import socketserver as SocketServer
 
 
 class Handler(SocketServer.BaseRequestHandler):
-    '''
-    classdocs
-    '''
-
-    def __init__(self, params):
-        '''
-        Constructor
-        '''
         
     """
     The request handler class for our server.
