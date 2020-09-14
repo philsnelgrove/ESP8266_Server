@@ -10,18 +10,21 @@ import socketserver as SocketServer
 class Handler(SocketServer.BaseRequestHandler):
         
     """
-    The request handler class for our server.
-    It is instantiated once per connection to the server, and must
+    The request handler class for our server.  It defines "self" 
+    as a SocketServer.BaseRequestHandler (aka "extends the class").
+    It is instantiated (ie used as a template to make an object)
+    once per connection to the server, and must
     override the handle() method to implement communication to the
     client.
     """
 
-    # this is the function that will be called when the
+    # this is the class function (or "method") that will be called when the
     # socket recieves a message; the "self" object
     # passed to it as a parameter will contain all 
-    # the properties and methods of the calling class
+    # the properties and methods of the parent class 
+    # (defined as SocketServer.BaseRequestHandler)
     #
-    # it is the nature of the "TCPServer" (from "Service") to call
+    # it is the nature of the "SocketServer.TCPServer" (from "Service") to call
     # a method named "handle" off the object it's been given as a handler.
     # We override that method here, and this one gets called instead.
     def handle(self):

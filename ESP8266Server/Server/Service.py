@@ -21,12 +21,13 @@ if __name__ == "__main__":
     # HOST, PORT = "192.168.1.24", 9999
     
     # Create the server, binding to localhost on port 9999
-    # we also give it the "Handler" object defined in the "Logic" class (Logic.Handler),
+    # we also give it the "Handler" class object 
+    # defined in the "Logic" module (Logic.Handler),
     # whch has been defined as a "BaseRequestHandler" object.
     # when the TCPServer method enumerates it below as the handler,
     # it will trigger it's built-in call to a "handle" method and 
     # feed it an object that satisfies the parameter requirement to construct
-    # the "MyTCPHandler" object (aka an object of the type "BaseRequestHandler") 
+    # the "Handler" object (aka an object of the type "BaseRequestHandler") 
     
     server = SocketServer.TCPServer((HOST, PORT), Logic.Handler)
     # ##server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
