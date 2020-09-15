@@ -47,7 +47,7 @@ class Handler(SocketServer.BaseRequestHandler):
         if ("MAC:" in str(self.data)):
             print('mac address found')
             print('address is {}'.format(self.data[4:]))
-            insert_result = self.datasource.register_node("NewNode", str(self.data[:4]), str(self.client_address[0]))
+            insert_result = self.datasource.register_node("NewNode", str(self.data[4:]), str(self.client_address[0]))
             return(insert_result)
         else:
             print('no mac address found')
