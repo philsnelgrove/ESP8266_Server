@@ -27,12 +27,12 @@ class DataSource(object):
         databases = self.cursor.fetchall()
         print(databases)
 
-    def register_node(self, name, mac_address):
+    def register_node(self, name, mac_address, ip_address):
         # perform an SQL insert with a new device
         prior_count = self.cursor.rowcount
         query = "INSERT INTO device (name, mac_address, last_connection, ip_address) VALUES (%s, %s, %s, %s)"
         now = time.strftime('%Y-%m-%d %H:%M:%S')
-        values = (name, mac_address, now)
+        values = (name, mac_address, now, ip_address)
         self.cursor.execute(query, values)
         self.db.commit()
         result_of_insert = self.cursor.rowcount - prior_count
