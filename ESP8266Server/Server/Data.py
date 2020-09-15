@@ -13,8 +13,8 @@ class DataSource(object):
     '''
     db = mysql.connect(
         host="localhost",
-        user="phil",
-        passwd="manchu",
+        user="wireless",
+        passwd="fast1",
         database="esp8266"
     )
     cursor = db.cursor()
