@@ -30,7 +30,7 @@ class DataSource(object):
     def register_node(self, name, mac_address):
         # perform an SQL insert with a new device
         prior_count = self.cursor.rowcount
-        query = "INSERT INTO device (name, mac_address, last_connection) VALUES (%s, %s, %s)"
+        query = "INSERT INTO device (name, mac_address, last_connection, ip_address) VALUES (%s, %s, %s, %s)"
         now = time.strftime('%Y-%m-%d %H:%M:%S')
         values = (name, mac_address, now)
         self.cursor.execute(query, values)
