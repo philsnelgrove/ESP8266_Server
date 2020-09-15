@@ -15,7 +15,7 @@ class DataSource(object):
         host="localhost",
         user="phil",
         passwd="manchu",
-        database="esp3266"
+        database="esp8266"
     )
     cursor = db.cursor()
 
