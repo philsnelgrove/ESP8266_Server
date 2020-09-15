@@ -37,15 +37,18 @@ class Handler(SocketServer.BaseRequestHandler):
         # these print to STDOUT information about the communication
         print ("{} wrote:".format(self.client_address[0]))
         self.parse_data()
-        self.check_for_handshake()
+        print("handshake check result is {}".format(self.check_for_handshake()))
         self.respond()
 
     def check_for_handshake(self):
         # process parsed respose for handshake info
-        print (self.data)
-        if (self.data[:4] == 'MAC:'):
+        comparison = str(self.data[:4])
+        print (comparison)
+        if ("MAC:" in str(self.data)):
             print('mac address found')
             print('address is {}'.format(self.data[4:]))
+            insert_result = self.datasource.register_node("NewNode", str(self.data[:4]))
+            return(insert_result)
         else:
             print('no mac address found')
 

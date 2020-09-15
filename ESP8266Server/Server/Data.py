@@ -14,7 +14,8 @@ class DataSource(object):
     db = mysql.connect(
         host="localhost",
         user="phil",
-        passwd="manchu"
+        passwd="manchu",
+        database="esp3266"
     )
     cursor = db.cursor()
 
@@ -28,11 +29,13 @@ class DataSource(object):
 
     def register_node(self, name, mac_address):
         # perform an SQL insert with a new device
+        prior_count = self.cursor.rowcount
         query = "INSERT INTO device (name, mac_address, last_connection) VALUES (%s, %s, %s)"
         now = time.strftime('%Y-%m-%d %H:%M:%S')
         values = (name, mac_address, now)
         self.cursor.execute(query, values)
-        result_of_insert = self.cursor.fetchall()
+        self.db.commit()
+        result_of_insert = self.cursor.rowcount - prior_count
         if result_of_insert:
             return(result_of_insert)
         else:
