@@ -65,9 +65,7 @@ class Handler(SocketServer.BaseRequestHandler):
             return("no registration required")
 
     def parse_data(self):
-#         print(self.data)
         request_object = json.loads(self.data)
-#         print(request_object)
         self.mac_address = request_object['mac']
         self.operation = request_object['operation']
         self.request_data = request_object['data']
@@ -75,5 +73,5 @@ class Handler(SocketServer.BaseRequestHandler):
 
     def respond(self):
         # just send back the same data to the client, but upper-cased
-        response = str.upper('***' + self.operation + ' complete')
+        response = str.upper('*** ' + self.operation + ' complete')
         self.request.sendall(str.encode(response))
