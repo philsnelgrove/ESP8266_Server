@@ -6,6 +6,7 @@ Created on Sep. 14, 2020
 
 import socketserver as SocketServer
 import ESP8266Server.Server.Data as Data
+import json
 
 
 class Handler(SocketServer.BaseRequestHandler):
@@ -18,6 +19,9 @@ class Handler(SocketServer.BaseRequestHandler):
     client.
     """
     datasource = Data.DataSource()
+    mac_address = 'null'
+    operation = 'null'
+    request_data = 'null'
 
     # this is the class function (or "method") that will be called when the
     # socket recieves a message; the "self" object
@@ -38,23 +42,38 @@ class Handler(SocketServer.BaseRequestHandler):
         print ("{} wrote:".format(self.client_address[0]))
         self.parse_data()
         print("handshake check result is {}".format(self.check_for_handshake()))
+        if (self.datasource.node_lookup_id_by_mac(self.mac_address) == 0):
+            print("unauthorized contact")
+            return()
         self.respond()
 
     def check_for_handshake(self):
-        # process parsed respose for handshake info
-        comparison = str(self.data[:4])
-        print (comparison)
-        if ("MAC:" in str(self.data)):
-            print('mac address found')
-            print('address is {}'.format(self.data[4:]))
-            insert_result = self.datasource.register_node("NewNode", str(self.data[4:]), str(self.client_address[0]))
-            return(insert_result)
+        # process parsed response for handshake info
+        if (self.operation == "register_client"):
+            print('client registration request found')
+            print('mac address is {}'.format(self.mac_address))
+            check_for_client = self.datasource.node_lookup_id_by_mac(self.mac_address)
+            if (check_for_client == 0):
+                insert_result = self.datasource.register_node("NewNode", self.mac_address, str(self.client_address[0]))
+                return(insert_result)
+            else:
+                return("client already registered")
+            # return(insert_result)
+            return("registered")
         else:
-            print('no mac address found')
+            # print('not a registration attempt')
+            return("no registration required")
 
     def parse_data(self):
-        print (self.data)
+#         print(self.data)
+        request_object = json.loads(self.data)
+#         print(request_object)
+        self.mac_address = request_object['mac']
+        self.operation = request_object['operation']
+        self.request_data = request_object['data']
+        print("request processed")
 
     def respond(self):
         # just send back the same data to the client, but upper-cased
-        self.request.sendall(self.data.upper())
+        response = str.upper('***' + self.operation + ' complete')
+        self.request.sendall(str.encode(response))

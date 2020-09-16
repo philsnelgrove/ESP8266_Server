@@ -11,10 +11,18 @@ class DataSource(object):
     '''
     classdocs
     '''
+    #===========================================================================
+    # db = mysql.connect(
+    #    host="localhost",
+    #    user="wireless",
+    #    passwd="fast1",
+    #    database="esp8266"
+    # )
+    #===========================================================================
     db = mysql.connect(
         host="localhost",
-        user="wireless",
-        passwd="fast1",
+        user="phil",
+        passwd="manchu",
         database="esp8266"
     )
     cursor = db.cursor()
@@ -39,31 +47,29 @@ class DataSource(object):
         if result_of_insert:
             return(result_of_insert)
         else:
-            return(-1)
+            return(0)
 
     def node_lookup_id_by_mac(self, mac_address):
         # perform an SQL request that checks for
         # the existence of a given MAC address
-        query = "SELECT id FROM device WHERE mac_address = '%s'"
-        value = mac_address
-        self.cursor.execute(query, value)
+        query = "SELECT id FROM device WHERE mac_address = %s"
+        self.cursor.execute(query, (mac_address,))
         result_of_query = self.cursor.fetchall()
         if result_of_query:
             return(result_of_query)
         else:
-            return(-1)
+            return(0)
 
     def node_lookup_by_id(self, device_id):
         # perform an SQl query to return the complete
         # record for a device, by ID
         query = "SELECT * FROM device WHERE id = %s"
-        value = device_id
-        self.cursor.execute(query, value)
+        self.cursor.execute(query, (device_id,))
         result_of_query = self.cursor.fetchall()
         if result_of_query:
             return(result_of_query)
         else:
-            return(-1)
+            return(0)
 
     def fetch_all_nodes(self):
         query = "SELECT * FROM `device`"
@@ -72,4 +78,4 @@ class DataSource(object):
         if result_of_query:
             return(result_of_query)
         else:
-            return(-1)
+            return(0)

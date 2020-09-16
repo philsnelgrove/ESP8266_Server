@@ -18,9 +18,9 @@ if __name__ == "__main__":
     # home
     # HOST, PORT = "10.0.0.29", 9999
     # bear's
-    # HOST, PORT = "192.168.1.24", 9999
+    HOST, PORT = "192.168.1.24", 9999
     # Dustin's
-    HOST, PORT = "192.168.0.150", 9999
+    # HOST, PORT = "192.168.0.150", 9999
     
     # Create the server, binding to localhost on port 9999
     # we also give it the "Handler" class object
