@@ -5,6 +5,7 @@ Created on Sep. 14, 2020
 '''
 
 import socketserver as SocketServer
+import socket
 import ESP8266Server.Server.Data as Data
 import json
 
@@ -75,3 +76,22 @@ class Handler(SocketServer.BaseRequestHandler):
         # just send back the same data to the client, but upper-cased
         response = str.upper('*** ' + self.operation + ' complete')
         self.request.sendall(str.encode(response))
+
+    def send_command_to_node(self, ip, port, command, data):
+        # initiate a connection to a node
+        object_to_form = {
+            "command": command,
+            "data": data,
+        }
+        json_message = json.dumps(object_to_form)
+        print(json_message)
+        TCP_IP = ip
+        TCP_PORT = port
+        BUFFER_SIZE = 1024
+        MESSAGE = json_message
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((TCP_IP, TCP_PORT))
+        s.send(MESSAGE)
+        data = s.recv(BUFFER_SIZE)
+        s.close()
+        print("received data:", data)
