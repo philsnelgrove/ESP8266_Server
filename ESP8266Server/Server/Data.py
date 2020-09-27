@@ -38,9 +38,9 @@ class DataSource(object):
     def register_node(self, name, mac_address, ip_address):
         # perform an SQL insert with a new device
         prior_count = self.cursor.rowcount
-        query = "INSERT INTO esp8266_control_device (name, mac_address, last_connection, ip_address) VALUES (%s, %s, %s, %s)"
+        query = "INSERT INTO esp8266_control_device (name, mac_address, last_connected, ip_address, connected, status, led_status) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         now = time.strftime('%Y-%m-%d %H:%M:%S')
-        values = (name, mac_address, now, ip_address)
+        values = (name, mac_address, now, ip_address, 'true', '001', 'off')
         self.cursor.execute(query, values)
         self.db.commit()
         result_of_insert = self.cursor.rowcount - prior_count

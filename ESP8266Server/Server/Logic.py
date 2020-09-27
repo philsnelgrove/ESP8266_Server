@@ -94,7 +94,7 @@ class Handler(SocketServer.BaseRequestHandler):
         # serialize the object into a
         # JSON string
         json_message = json.dumps(object_to_form)
-        # print it out for good measure... 
+        # print it out for good measure...
         # this is debug and TBR
         print(json_message)
         # set up the criteria to open
