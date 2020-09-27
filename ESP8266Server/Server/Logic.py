@@ -78,20 +78,41 @@ class Handler(SocketServer.BaseRequestHandler):
         self.request.sendall(str.encode(response))
 
     def send_command_to_node(self, ip, port, command, data):
-        # initiate a connection to a node
+        # this will send a command to a node.
+        # this function doesn't care what
+        # the command is or which node
+        # it sends to, that is established
+        # when the call is made, and passed
+        # in the parameters.  This allows us
+        # to send any command to any node.
+        #
+        # form an object for our message
         object_to_form = {
             "command": command,
             "data": data,
         }
+        # serialize the object into a
+        # JSON string
         json_message = json.dumps(object_to_form)
+        # print it out for good measure... 
+        # this is debug and TBR
         print(json_message)
+        # set up the criteria to open
+        # a socket with the node, seding
+        # our message
         TCP_IP = ip
         TCP_PORT = port
         BUFFER_SIZE = 1024
         MESSAGE = json_message
+        # establish the socket using our config
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # connect to the configured socket
         s.connect((TCP_IP, TCP_PORT))
+        # send our message
         s.send(MESSAGE)
+        # recieve feedback
         data = s.recv(BUFFER_SIZE)
+        # close connection
         s.close()
+        # print out the response from the node
         print("received data:", data)
