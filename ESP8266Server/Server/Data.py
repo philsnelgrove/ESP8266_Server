@@ -5,6 +5,7 @@ Created on Sep. 14, 2020
 '''
 import mysql.connector as mysql
 import time
+import os
 
 
 class DataSource(object):
@@ -20,10 +21,10 @@ class DataSource(object):
     # )
     #===========================================================================
     db = mysql.connect(
-        host="localhost",
-        user="phil",
-        passwd="manchu",
-        database="esp8266"
+        host=os.getenv('DB_HOST', 'Null'),
+        user=os.getenv('DB_USER', 'Null'),
+        passwd=os.getenv('DB_PASSWORD', 'Null'),
+        database=os.getenv('DB_NAME', 'Null'),
     )
     cursor = db.cursor()
 
