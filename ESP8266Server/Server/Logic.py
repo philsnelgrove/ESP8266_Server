@@ -110,9 +110,9 @@ def send_command_to_node(self, ip, port, command, data="null"):
     # connect to the configured socket
     s.connect((TCP_IP, TCP_PORT))
     # send our message
-    s.send(MESSAGE)
+    s.send(MESSAGE.encode())
     # recieve feedback
-    data = s.recv(BUFFER_SIZE)
+    #  data = s.recv(BUFFER_SIZE)
     # close connection
     s.close()
     # print out the response from the node
