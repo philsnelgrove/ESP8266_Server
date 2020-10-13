@@ -38,7 +38,7 @@ class Handler(SocketServer.BaseRequestHandler):
         # self.request is the TCP socket connected to the client
         # this line will "grab" the first 1024 bytes of data
         # off the request object and then remove all the trailing spaces
-        self.data = self.request.recv(1024).strip()
+        self.data = self.request.recv(1024).strip().decode("utf-8")
         # these print to STDOUT information about the communication
         print ("{} wrote:".format(self.client_address[0]))
         self.parse_data()
