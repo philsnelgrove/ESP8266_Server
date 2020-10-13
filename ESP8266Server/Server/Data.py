@@ -80,3 +80,17 @@ class DataSource(object):
             return(result_of_query)
         else:
             return(0)
+
+    def insert_report(self, device_id, data_object):
+        # do a for loop to check "data"
+        # turn the keys into the first
+        # part of the query, and turn the values into the second part
+        # the result is inserted into the reports table
+        return(0)
+
+    def update_device_status(self, device_id, data_object):
+        # do a for loop to check "data"
+        # turn the keys into the first
+        # part of the query, and turn the values into the second part
+        # the result updates a record on the device table
+        return(0)

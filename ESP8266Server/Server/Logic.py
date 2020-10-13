@@ -70,12 +70,23 @@ class Handler(SocketServer.BaseRequestHandler):
         self.mac_address = request_object['mac']
         self.operation = request_object['operation']
         self.request_data = request_object['data']
-        print("request processed")
+        print("request processed:")
+        print(self.mac_address)
+        print(self.operation)
+        print(self.request_data)
 
     def respond(self):
-        # just send back the same data to the client, but upper-cased
-        response = str.upper('*** ' + self.operation + ' complete')
+        switch = {
+            "report":report,
+        }
+        func = switch.get(self.operation, lambda:"Invalid command")
+        result = func()
+        response = str.upper(result)
         self.request.sendall(str.encode(response))
+
+    def report(self):
+        
+        return "ok"
 
 
 def send_command_to_node(self, ip, port, command, data="null"):
