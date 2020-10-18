@@ -8,6 +8,7 @@ import socketserver as SocketServer
 import socket
 import ESP8266Server.Server.Data as Data
 import json
+import time
 
 
 class Handler(SocketServer.BaseRequestHandler):
@@ -76,16 +77,12 @@ class Handler(SocketServer.BaseRequestHandler):
         print(self.request_data)
 
     def respond(self):
-        switch = {
-            "report":report,
-        }
-        func = switch.get(self.operation, lambda:"Invalid command")
-        result = func()
-        response = str.upper(result)
+        # func = switch.get(self.operation, lambda:"Invalid command")
+        func = getattr(self, self.operation, lambda: "Invalid Command")
+        response = str.upper(func())
         self.request.sendall(str.encode(response))
 
     def report(self):
-        
         return "ok"
 
 
@@ -114,17 +111,19 @@ def send_command_to_node(self, ip, port, command, data="null"):
     # our message
     TCP_IP = ip
     TCP_PORT = port
-    BUFFER_SIZE = 1024
+    BUFFER_SIZE = 4096
     MESSAGE = json_message
     # establish the socket using our config
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # connect to the configured socket
     s.connect((TCP_IP, TCP_PORT))
+    time.sleep(0.05)
     # send our message
     s.send(MESSAGE.encode())
     # recieve feedback
-    #  data = s.recv(BUFFER_SIZE)
+    # data = s.recv(BUFFER_SIZE)
     # close connection
+    time.sleep(0.05)
     s.close()
     # print out the response from the node
     print("received data:", data)
